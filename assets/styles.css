@@ -1,0 +1,95 @@
+.root {
+    position: relative;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+}
+
+.root .highlight {
+    background-color: aquamarine;
+}
+.richtext-center{
+    text-align: center !important;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+p{
+    margin:0
+}
+.loader {
+  border: 5px solid #197e6b;
+  /* Light grey */
+  border-top: 5px solid #f3f3f3;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  0% {
+      transform: rotate(0deg);
+  }
+
+  100% {
+      transform: rotate(360deg);
+  }
+}
+.star-hover {
+    color: yellow;
+  }
+  .star-hover::before {
+    content: "★";
+  }
+  .star-hover:focus, .star-hover:hover {
+    color: yellow;
+  }
+  .star-hover:focus::before, .star-hover:hover::before {
+    content: "★";
+  }
+  .star-hover:focus ~ .star-hover, .star-hover:hover ~ .star-hover {
+    color: #ccc;
+  }
+  .star-hover:focus ~ .star-hover::before, .star-hover:hover ~ .star-hover::before {
+    content: "★";
+  }
+  
+  .star-container:not(:focus-within):not(:hover) .star-hover {
+    color: #ccc;
+  }
+  .star-container:not(:focus-within):not(:hover) .star-hover::before {
+    content: "★";
+  }
+  
+  
+  .star-hover {
+    font-size: 20px;
+    cursor: pointer;
+    transition: color .2s;
+  }
+  .star-selected {
+    font-size: 20px;
+    cursor: pointer;
+    color: yellow;
+    transition: color .2s;
+  }
+  .star-disabled {
+    font-size: 20px;
+    color: #ccc;
+    transition: color .2s;
+  }
+  .icon{
+    display: flex;
+    cursor: pointer;
+  }
