@@ -38,6 +38,7 @@ export default class Main extends Component<MainProps, MainState> {
     }
 
     componentDidMount() {
+        this.checkCopyPermission()
         // Set up the listener on the rootRecord (RootEntity). The listener
         // will propogate changes to the render() method in this component
         // using setState
@@ -51,7 +52,7 @@ export default class Main extends Component<MainProps, MainState> {
         rootRecord.unlisten(this.refreshData_);
     }
     checkCopyPermission() {
-        this.checkCopyPermission()
+        
         const { rootRecord } = this.props;
             const documentId = quip.apps.getThreadId()
             if (!documentId) return

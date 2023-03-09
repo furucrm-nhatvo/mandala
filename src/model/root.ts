@@ -35,7 +35,33 @@ export class RootEntity extends quip.apps.RootRecord {
             allowAccess:true
         };
     }
+    private listenedChildren: MandalaCellRecord[] = []
 
+    private childUpdated = () => {
+        this.notifyListeners()
+    }
+    initialize(): void {
+        const updateChildListeners = () => {
+            // First, clear out our existing listeners to avoid leaks
+            this.listenedChildren.forEach(child => {
+                child.unlisten(this.childUpdated)
+            })
+            // clear out our listeners so it'll be accurate
+            this.listenedChildren = []
+            // then add new listeners for all our current children
+            this.getMandalaList().getRecords().forEach(child => {
+                child.listen(this.childUpdated)
+                // track all the children we're listening to so we can
+                // unlisten to them when this list changes
+                this.listenedChildren.push(child)
+            })
+        }
+        // Add a listener to the list itself which will make sure we listen
+        // to all children
+        this.getMandalaList().listen(updateChildListeners)
+        // invoke it so we initialize with listeners
+        updateChildListeners()
+    }
     getData() {
         return {
             isHighlighted: this.isHighlighted_,

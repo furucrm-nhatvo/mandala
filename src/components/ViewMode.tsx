@@ -4,7 +4,7 @@ import MandalaCellRecord from '../model/MandalaCellRecord';
 import { RootEntity } from '../model/root';
 import Analytic from './Analytic';
 
-export default function ViewMode(props:any) {
+export default function ViewMode(props: any) {
     const rootRecord = quip.apps.getRootRecord() as RootEntity;
     const mandalaList = rootRecord.getMandalaList();
     const [mainCells, setMainCells] = useState<MandalaCellRecord[]>(
@@ -22,13 +22,13 @@ export default function ViewMode(props:any) {
         };
     }, [])
     return (
-        <div style={{padding: "10px",}}>
+        <div style={{ padding: "10px", }}>
             <div
                 style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    
+
                 }}
             >
                 <p>{rootRecord.get('startDate') || ''} ~ {rootRecord.get('endDate') || ''}</p>
@@ -45,29 +45,50 @@ export default function ViewMode(props:any) {
                     {'Edit'}
                 </div>
             </div>
-            <div style={{height:'10px'}}></div>
+            <div style={{ height: '10px' }}></div>
             <div
                 style={{
                     width: "100%",
                     display: "flex",
                     alignItems: "start",
-                    justifyContent: selectedCellId? "space-between" :'center',
-                    background:'#fafafa',
-                    padding:'10px',
-                    border:'2px solid #efefef'
+                    justifyContent: selectedCellId ? "space-between" : 'center',
+                    background: '#fafafa',
+                    padding: '10px',
+                    border: '2px solid #efefef'
                 }}
             >
                 {selectedCellId && <div>
-                        <Analytic record={mandalaList.getRecords().find(record=>record.getId() === selectedCellId)}></Analytic>
-                    </div>}
+                    <Analytic record={mandalaList.getRecords().find(record => record.getId() === selectedCellId)}></Analytic>
+                </div>}
                 <div style={{ display: "grid", gap: "10px", gridTemplateColumns: 'repeat(3, 1fr)' }}>
-                    {mainCells.map((record, index) => {
-                        const { title, color, isRealCell,id } = record.getData();
+                    {mainCells.length === 0 && Array(9).fill(null).map((_, index) => {
+                        return (
+                            <div
+                                style={{
+                                    background: index === 4 ? 'black' : "#999999",
+                                    borderRadius: "20px",
+                                    width: "120px",
+                                    height: "120px",
+                                    cursor: "pointer",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    color: "white",
+                                    overflow: 'hidden',
+                                    padding: '5px'
+                                }}
+                            >
+                                XXX
+                            </div>
+                        );
+                    })}
+                    {mainCells.length > 0 && mainCells.map((record, index) => {
+                        const { title, color, isRealCell, id } = record.getData();
                         const chartTitle = rootRecord.getData().title
                         const cellTitle = !isRealCell ? chartTitle : title
                         return (
                             <div
-                                onClick={!isRealCell ? ()=>{} : ()=>setSelectedCellId(id)}
+                                onClick={!isRealCell ? () => { } : () => setSelectedCellId(id)}
                                 style={{
                                     background: !isRealCell ? 'black' : title.empty() ? "#999999" : color,
                                     borderRadius: "20px",
@@ -79,8 +100,8 @@ export default function ViewMode(props:any) {
                                     alignItems: "center",
                                     justifyContent: "center",
                                     color: "white",
-                                    overflow:'hidden',
-                                    padding:'5px'
+                                    overflow: 'hidden',
+                                    padding: '5px'
                                 }}
                             >
                                 {cellTitle.empty() ? "XXX" : cellTitle.getTextContent()}

@@ -37,8 +37,9 @@ export default function FullScreenContainer(props: any) {
                             return <>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '5px' }}>
                                     {mandalaList.getRecords().filter(record => !record.getData().isSubCell).map(record => {
-                                        const {isRealCell, title} = record.getData()
-                                        return <div style={{ height: '50px', background: record.getData().color, border: '1px solid black',display:'flex', alignItems:'center', justifyContent:'center', color: isLightBackground(record.getData().color)?'black':'white', overflow:'hidden', padding:'5px' }}>{isRealCell ? title.empty()?'XXX':title.getTextContent(): titleRichText.getTextContent()}</div>
+                                        const {isRealCell, title, color} = record.getData()
+                                        const background = !isRealCell ? 'black' : title.empty() ? '#999999' : color
+                                        return <div style={{ height: '50px', background: background, border: '1px solid black',display:'flex', alignItems:'center', justifyContent:'center', color: isLightBackground(background)?'black':'white', overflow:'hidden', padding:'5px' }}>{isRealCell ? title.empty()?'XXX':title.getTextContent(): titleRichText.getTextContent()}</div>
                                     })}
                                 </div>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '5px' }}>
